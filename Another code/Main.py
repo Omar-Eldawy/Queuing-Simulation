@@ -38,7 +38,7 @@ def simulation_factory(part_A: bool):
 
                         print(f"For l={l}, u1={u1}, u2={u2}, T={t}, the time average number of customers in the system "
                               f"E[T]={(total_time / N):.3f}")
-                        table.append([l, u1, u2, t, total_time / N])
+                        table.append([0, l, u1, u2, t, total_time / N])
 
                     print("-----------------------------------------------------------------------------------------"
                           "------")
@@ -56,10 +56,14 @@ def simulation_factory(part_A: bool):
                     plt.legend()
                     plt.xlim(0, part_B_time)
                     plt.show()
+                    table.append([1000, l, u1, u2, part_B_time, queue_1_data[-1], queue_2_data[-1]])
 
     if part_A:
-        df = pd.DataFrame(table, columns=["l", "u1", "u2", "T", "E[T]"])
+        df = pd.DataFrame(table, columns=["q", "l", "u1", "u2", "T", "E[T]"])
         df.to_csv("part_a.csv", index=False)
+    else:
+        df = pd.DataFrame(table, columns=["q", "l", "u1", "u2", "T", "Queue 1 final size", "Queue 2 final size"])
+        df.to_csv("part_b.csv", index=False)
 
 
 if __name__ == "__main__":
